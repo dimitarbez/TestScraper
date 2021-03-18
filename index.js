@@ -9,7 +9,6 @@ async function getHDDListings(page) {
     let html = await page.content()
     let $ = cheerio.load(html)
       
-    console.log($('.swatch').length)
     for (let i = 1; i <= $('.swatch').length; i++) {
         await page.click(`.swatches > button:nth-of-type(${i})`)
         html = await page.content()
@@ -23,7 +22,6 @@ async function getHDDListings(page) {
         })
     }
 
-    console.log(hddList)
     return hddList
 }
 
