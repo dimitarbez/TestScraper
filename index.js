@@ -53,7 +53,7 @@ async function listAllItemUrls(page) {
 }
 
 async function main () {
-    const browser = await puppeteer.launch({headless: false, slowMo: 200})
+    const browser = await puppeteer.launch({headless: true, slowMo: 0})
     const page = await browser.newPage()
     page.setViewport({width: 1920, height: 1080})
 
