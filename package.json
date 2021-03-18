@@ -1,0 +1,23 @@
+{
+  "name": "testscraper",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dimitarbez/TestScraper.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dimitarbez/TestScraper/issues"
+  },
+  "homepage": "https://github.com/dimitarbez/TestScraper#readme",
+  "dependencies": {
+    "cheerio": "^1.0.0-rc.5",
+    "puppeteer": "^8.0.0"
+  }
+}
