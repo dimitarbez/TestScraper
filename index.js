@@ -4,17 +4,19 @@ const fs = require('fs');
 
 const url = 'https://webscraper.io/test-sites/e-commerce/allinone'
 
+// get the hdd data for the specific item
 async function getHDDListings(page) {
     let hddList = []
     let html = await page.content()
     let $ = cheerio.load(html)
       
     for (let i = 1; i <= $('.swatch').length; i++) {
-        await page.click(`.swatches > button:nth-of-type(${i})`)
+        let swatchElement = `.swatches > button:nth-of-type(${i})`
+        await page.click(swatchElement)
         html = await page.content()
         $ = cheerio.load(html)
-        let storage = $(`.swatches > button:nth-of-type(${i})`).text()
-        let isAvailable = $(`.swatches > button:nth-of-type(${i})`).attr('class').includes('disabled') ? true : false
+        let storage = $(swatchElement).text()
+        let isAvailable = $(swatchElement).attr('class').includes('disabled') ? true : false
         hddList.push({
             'storage': storage,
             'price': $('.price').text(),
@@ -25,6 +27,7 @@ async function getHDDListings(page) {
     return hddList
 }
 
+// get data from specific item
 async function getDataFromItem(page, itemUrl) {
     let item = {}
     await page.goto(itemUrl)
@@ -40,6 +43,7 @@ async function getDataFromItem(page, itemUrl) {
     return item
 }
 
+// go through all items
 async function listAllItemUrls(page) {
     await page.goto(url)
     const html = await page.content()
