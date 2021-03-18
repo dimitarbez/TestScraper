@@ -1,6 +1,7 @@
 const puppeteer = require('puppeteer')
 const cheerio = require('cheerio')
 const fs = require('fs');
+const { parse } = require('path');
 
 const url = 'https://webscraper.io/test-sites/e-commerce/allinone'
 
@@ -16,9 +17,9 @@ async function getHDDListings(page) {
         html = await page.content()
         $ = cheerio.load(html)
         let storage = $(swatchElement).text()
-        let isAvailable = $(swatchElement).attr('class').includes('disabled') ? true : false
+        let isAvailable = $(swatchElement).attr('class').includes('disabled') ? false : true
         hddList.push({
-            'storage': storage,
+            'storage': parseInt(storage),
             'price': $('.price').text(),
             'available': isAvailable
         })
@@ -37,6 +38,7 @@ async function getDataFromItem(page, itemUrl) {
     item['name'] = $('.caption > h4:nth-of-type(2)').text()
     item['description'] = $('.description').text()
     item['image_URL'] = 'https://webscraper.io' + $('.img-responsive').attr('src')
+    item['rating'] = parseInt($('.ratings > p > span').length)
     item['reviews'] = parseInt($('.ratings > p').text().trim().split(' ')[0])
     item['HDD'] = await getHDDListings(page)
 
