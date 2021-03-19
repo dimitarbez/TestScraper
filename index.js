@@ -1,7 +1,10 @@
+require('dotenv').config()
 const puppeteer = require('puppeteer')
 const cheerio = require('cheerio')
 const fs = require('fs');
 const url = 'https://webscraper.io/test-sites/e-commerce/allinone'
+
+const { uploadData } = require('./s3')
 
 // get the hdd data for the specific item
 async function getHDDListings(page) {
@@ -81,6 +84,8 @@ async function main () {
     console.log(data)
     browser.close()
     fs.writeFileSync('data.json', JSON.stringify(data))
+    const result = await uploadData(data)
+    console.log(result)
 }
 
 main()
